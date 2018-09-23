@@ -11,7 +11,8 @@ Project: Project 2 (BFS and IDS with permutation)
 using namespace std;
 
 vector<int> getInput ();
-void BFS(vector<int> Permutation, int size);
+void BFS (vector<int> Permutation, int size);
+bool checkGoal (vector<int> Permutation, int size);
 
 struct Node
 {
@@ -28,12 +29,19 @@ struct Node
 int main()
 {
     vector<int> permutation = getInput();
-    for(int i = 0; i < permutation.size(); i++)
+    int size = permutation.size();
+    
+    for(int i = 0; i < size; i++)
     {
       cout << permutation[i] << " ";
     }
     cout << endl;
-    BFS(permutation, permutation.size());
+    
+    bool a = checkGoal(permutation, size);
+    cout << "true or false: " << a << endl;
+    
+    BFS(permutation, size);
+    
     return 0;
 }
 
@@ -86,10 +94,29 @@ void BFS(vector<int> Permutation, int size)
 {
     vector<Node> Pointers;
     queue<Node> Queue;
+    
     Node initial;
     initial.parent = -1;
     for (int i = 0; i < size; i++)
         initial.Perm.push_back(Permutation[i]);
+        
     Pointers.push_back(initial);
     Queue.push(initial);
+    
+    while(!Queue.empty())
+    {
+        Node currentNode = Queue.front();
+        cout << "current node parent: " << currentNode.parent << endl;
+        Queue.pop();
+    }
+}
+
+bool checkGoal(vector<int> Permutation, int size)
+{
+    for (int i = 0; i < size - 1; i++)
+    {
+        if (Permutation[i] > Permutation[i+1])
+            return false;
+    }
+    return true;
 }
