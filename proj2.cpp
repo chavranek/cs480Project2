@@ -9,6 +9,8 @@ Project: Project 2 (BFS and IDS with permutation)
 
 using namespace std;
 
+vector<int> getInput ();
+
 struct Node
 {
     vector<int> Perm;
@@ -23,7 +25,19 @@ struct Node
 
 int main()
 {
-  int num = 0;
+  vector<int> i = getInput();
+  for(int i = 0; i < permutation.size(); i++)
+    {
+      cout << permutation[i] << " ";
+    }
+  cout << endl;
+	
+  return 0;
+}
+
+vector<int> getInput()
+{
+    int num = 0;
   string P;
   string number;
   vector<int> permutation;
@@ -56,13 +70,12 @@ int main()
 	  number = "";
 	}
     }
-
+/*
   // just to make sure the vector is correct
   for(int i = 0; i < permutation.size(); i++)
     {
       cout << permutation[i] << " ";
     }
-  cout << endl;
-
-    
+  cout << endl;*/
+  return permutation;
 }
