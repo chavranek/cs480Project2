@@ -9,6 +9,18 @@ Project: Project 2 (BFS and IDS with permutation)
 
 using namespace std;
 
+struct Node
+{
+    vector<int> Perm;
+    int parent;
+    
+    Node()
+    {
+        vector<int> Perm;
+        parent = -1;
+    }
+};
+
 int main()
 {
   int num = 0;
