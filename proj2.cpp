@@ -6,10 +6,27 @@ Project: Project 2 (BFS and IDS with permutation)
 #include <iostream>
 #include <vector>
 #include <string>
-<<<<<<< HEAD
 #include <algorithm>
+#include <queue>
 
 using namespace std;
+
+vector<int> getInput ();
+void BFS (vector<int> Permutation, int size);
+bool checkGoal (vector<int> Permutation, int size);
+
+struct Node
+{
+    vector<int> Perm;
+    int parent;
+
+    Node()
+    {
+        vector<int> Perm;
+        parent = -1;
+    }
+};
+
 
 void successors(vector<int> permutation, int size)
 {
@@ -35,27 +52,6 @@ void successors(vector<int> permutation, int size)
     }
   
 }
-=======
-#include <queue>
-
-using namespace std;
-
-vector<int> getInput ();
-void BFS (vector<int> Permutation, int size);
-bool checkGoal (vector<int> Permutation, int size);
-
-struct Node
-{
-    vector<int> Perm;
-    int parent;
-    
-    Node()
-    {
-        vector<int> Perm;
-        parent = -1;
-    }
-};
->>>>>>> refs/remotes/origin/christian
 
 int main()
 {
@@ -111,7 +107,6 @@ vector<int> getInput()
 	  number = "";
 	}
     }
-<<<<<<< HEAD
   
 /*
   int size = permutation.size();
@@ -134,7 +129,6 @@ void BFS(vector<int> Permutation, int size)
         
     Pointers.push_back(initial);
     Queue.push(initial);
->>>>>>> refs/remotes/origin/christian
     
     while(!Queue.empty())
     {
