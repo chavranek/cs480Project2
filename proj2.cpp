@@ -14,6 +14,8 @@ using namespace std;
 vector<int> getInput ();
 void BFS (vector<int> Permutation, int size);
 bool checkGoal (vector<int> Permutation, int size);
+void printOutput (vector<int> Pointers, int index);
+
 
 struct Node
 {
@@ -130,11 +132,19 @@ void BFS(vector<int> Permutation, int size)
     Pointers.push_back(initial);
     Queue.push(initial);
     
-    while(!Queue.empty())
+        while(!Queue.empty())
     {
         Node currentNode = Queue.front();
-        cout << "current node parent: " << currentNode.parent << endl;
+        //cout << "current node parent: " << currentNode.parent << endl;
         Queue.pop();
+        if (checkGoal(currentNode.Perm, size))
+        {
+            printOutput(Pointers, currentNode.parent);
+            return;
+        }
+        
+        //successor code goes here
+            
     }
 }
 
@@ -145,5 +155,16 @@ bool checkGoal(vector<int> Permutation, int size)
         if (Permutation[i] > Permutation[i+1])
             return false;
     }
+    for (int i = 0; i < size; i++)
+        cout << Permutation[i] << ' ';
     return true;
+}
+
+void printOutput(vector<int> Pointers, int index)
+{
+    while (index != -1)
+    {
+        cout << Pointers[index].Perm << endl;
+        index = Pointers[index].parent;
+    }
 }
