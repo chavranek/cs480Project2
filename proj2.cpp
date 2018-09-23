@@ -11,7 +11,9 @@ using namespace std;
 
 int main()
 {
+  int num = 0;
   string P;
+  string number;
   vector<int> permutation;
   cout << "Input a permutation: " << endl;
 
@@ -22,12 +24,24 @@ int main()
   // converts all characters to ints, then
   // pushes them onto a vector.
   for(int i = 0; i < P.length(); i++)
-    {
+  {
       if (isdigit(P[i]))
+    	{
+    	  string snum(1, P[i]);
+	  number += snum;
+	}
+      else if(P[i] == ' ')
 	{
-	  string snum(1, P[i]);
-	  int num = stoi(snum);
-	  permutation.push_back(num);
+	  int num = stoi(number);
+          permutation.push_back(num);
+          number = "";
+
+	}
+      if(i == P.length()-1)
+	{
+	  int num = stoi(number);
+          permutation.push_back(num);
+	  number = "";
 	}
     }
 
