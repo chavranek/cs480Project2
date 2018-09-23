@@ -14,8 +14,6 @@ using namespace std;
 vector<int> getInput ();
 void BFS (vector<int> Permutation, int size);
 bool checkGoal (vector<int> Permutation, int size);
-void printOutput (vector<int> Pointers, int index);
-
 
 struct Node
 {
@@ -29,30 +27,39 @@ struct Node
     }
 };
 
+vector<Node> Permutation;
+queue<Node> Queue;
+void printOutput (vector<Node> Pointers, int index);
 
-void successors(vector<int> permutation, int size)
+void successors(vector<Node>&Pointers, queue<Node>&Queue, vector<int>permutation, int parent, int size)
 {
   for(int i = 2; i <= size; i++)
     {
       for(int j = 0; j + i <= size; j++)
         {
+	  vector<int> cycle;
           vector<int> succ;
 	  succ = permutation;
           reverse(succ.begin()+j, succ.begin()+j+i);
-	  if (!equal(succ.begin(), succ.end(), permutation.begin()))
+	  cycle = Pointers[parent].Perm;
+	  if (!equal(succ.begin(), succ.end(), cycle.begin()))
 	    {
-	      //push node into vector
-	      //push node into queue
+	      Node childNode;
+	      childNode.Perm = succ;
+	      childNode.parent = parent;
+	      Pointers.push_back(childNode);
+
+	      childNode.parent = Pointers.size() - 1;
+	      Queue.push(childNode);
 	    }
+	  /*cout << "posisible perms" << endl;
 	  for(int m = 0; m < succ.size(); m++)
 	    {
 	      cout << succ[m] << " ";
 	    }
-          cout << endl;
-	  
+          cout << endl;*/
         }
     }
-  
 }
 
 int main()
@@ -60,14 +67,14 @@ int main()
     vector<int> permutation = getInput();
     int size = permutation.size();
     
-    for(int i = 0; i < size; i++)
+    /*for(int i = 0; i < size; i++)
     {
       cout << permutation[i] << " ";
     }
-    cout << endl;
+    cout << endl;*/
     
-    bool a = checkGoal(permutation, size);
-    cout << "true or false: " << a << endl;
+    //bool a = checkGoal(permutation, size);
+    //cout << "true or false: " << a << endl;
     
     BFS(permutation, size);
     
@@ -84,6 +91,7 @@ vector<int> getInput()
 
   // grabs the entire line of user input
   getline(cin, P);
+  cout << endl;
 
   // moves through the entire user input and
   // converts all characters to ints, then
@@ -121,8 +129,8 @@ vector<int> getInput()
 
 void BFS(vector<int> Permutation, int size)
 {
-    vector<Node> Pointers;
-    queue<Node> Queue;
+  vector<Node> Pointers;
+  queue<Node> Queue;
     
     Node initial;
     initial.parent = -1;
@@ -130,9 +138,10 @@ void BFS(vector<int> Permutation, int size)
         initial.Perm.push_back(Permutation[i]);
         
     Pointers.push_back(initial);
+    initial.parent = Pointers.size()-1;
     Queue.push(initial);
     
-        while(!Queue.empty())
+    while(!Queue.empty())
     {
         Node currentNode = Queue.front();
         //cout << "current node parent: " << currentNode.parent << endl;
@@ -143,9 +152,9 @@ void BFS(vector<int> Permutation, int size)
             return;
         }
         
-        //successor code goes here
-            
+        successors(Pointers, Queue, currentNode.Perm, initial.parent, size);
     }
+    return;
 }
 
 bool checkGoal(vector<int> Permutation, int size)
@@ -157,14 +166,20 @@ bool checkGoal(vector<int> Permutation, int size)
     }
     for (int i = 0; i < size; i++)
         cout << Permutation[i] << ' ';
+    cout << endl;
     return true;
 }
 
-void printOutput(vector<int> Pointers, int index)
+void printOutput(vector<Node> Pointers, int index)
 {
     while (index != -1)
     {
-        cout << Pointers[index].Perm << endl;
-        index = Pointers[index].parent;
+      //cout << "here" << endl;
+      for (int i = 0; i < Pointers[index].Perm.size(); i++)
+	{
+	  cout << Pointers[index].Perm[i] << " ";
+	}
+      cout << endl;
+      index = Pointers[index].parent;
     }
 }
