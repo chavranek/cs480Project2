@@ -6,8 +6,34 @@ Project: Project 2 (BFS and IDS with permutation)
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 using namespace std;
+
+void successors(vector<int> permutation, int size)
+{
+  for(int i = 2; i <= size; i++)
+    {
+      for(int j = 0; j + i <= size; j++)
+        {
+          vector<int> succ;
+	  succ = permutation;
+          reverse(succ.begin()+j, succ.begin()+j+i);
+	  if (!equal(succ.begin(), succ.end(), permutation.begin()))
+	    {
+	      //push node into vector
+	      //push node into queue
+	    }
+	  for(int m = 0; m < succ.size(); m++)
+	    {
+	      cout << succ[m] << " ";
+	    }
+          cout << endl;
+	  
+        }
+    }
+  
+}
 
 int main()
 {
@@ -44,13 +70,16 @@ int main()
 	  number = "";
 	}
     }
-
+  
   // just to make sure the vector is correct
-  for(int i = 0; i < permutation.size(); i++)
+  /*for(int i = 0; i < permutation.size(); i++)
     {
       cout << permutation[i] << " ";
-    }
+    }*/
   cout << endl;
 
+  int size = permutation.size();
+
+  successors(permutation, size);
     
 }
