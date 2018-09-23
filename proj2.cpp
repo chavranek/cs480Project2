@@ -6,10 +6,12 @@ Project: Project 2 (BFS and IDS with permutation)
 #include <iostream>
 #include <vector>
 #include <string>
+#include <queue>
 
 using namespace std;
 
 vector<int> getInput ();
+void BFS(vector<int> Permutation, int size);
 
 struct Node
 {
@@ -25,14 +27,14 @@ struct Node
 
 int main()
 {
-  vector<int> i = getInput();
-  for(int i = 0; i < permutation.size(); i++)
+    vector<int> permutation = getInput();
+    for(int i = 0; i < permutation.size(); i++)
     {
       cout << permutation[i] << " ";
     }
-  cout << endl;
-	
-  return 0;
+    cout << endl;
+    BFS(permutation, permutation.size());
+    return 0;
 }
 
 vector<int> getInput()
@@ -78,4 +80,16 @@ vector<int> getInput()
     }
   cout << endl;*/
   return permutation;
+}
+
+void BFS(vector<int> Permutation, int size)
+{
+    vector<Node> Pointers;
+    queue<Node> Queue;
+    Node initial;
+    initial.parent = -1;
+    for (int i = 0; i < size; i++)
+        initial.Perm.push_back(Permutation[i]);
+    Pointers.push_back(initial);
+    Queue.push(initial);
 }
