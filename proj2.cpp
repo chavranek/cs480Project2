@@ -120,7 +120,6 @@ vector<int> getInput()
   
 /*
   int size = permutation.size();
-
   successors(permutation, size);
     }
   cout << endl;*/
@@ -152,7 +151,7 @@ void BFS(vector<int> Permutation, int size)
             return;
         }
         
-        successors(Pointers, Queue, currentNode.Perm, initial.parent, size);
+        successors(Pointers, Queue, currentNode.Perm, currentNode.parent, size);
     }
     return;
 }
@@ -164,14 +163,15 @@ bool checkGoal(vector<int> Permutation, int size)
         if (Permutation[i] > Permutation[i+1])
             return false;
     }
-    for (int i = 0; i < size; i++)
+    /*for (int i = 0; i < size; i++)
         cout << Permutation[i] << ' ';
-    cout << endl;
+    cout << endl;*/
     return true;
 }
 
 void printOutput(vector<Node> Pointers, int index)
 {
+    
     while (index != -1)
     {
       //cout << "here" << endl;
@@ -180,6 +180,8 @@ void printOutput(vector<Node> Pointers, int index)
 	  cout << Pointers[index].Perm[i] << " ";
 	}
       cout << endl;
+      //cout << index << endl;
       index = Pointers[index].parent;
+      //cout << index << endl;
     }
 }
