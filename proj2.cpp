@@ -120,7 +120,6 @@ vector<int> getInput()
   
 /*
   int size = permutation.size();
-
   successors(permutation, size);
     }
   cout << endl;*/
@@ -164,14 +163,12 @@ bool checkGoal(vector<int> Permutation, int size)
         if (Permutation[i] > Permutation[i+1])
             return false;
     }
-    /*for (int i = 0; i < size; i++)
-        cout << Permutation[i] << ' ';*/
-    //cout << endl;
     return true;
 }
 
 void printOutput(vector<Node> Pointers, int index)
 {
+    
     while (index != -1)
     {
       //cout << "here" << endl;
@@ -180,6 +177,8 @@ void printOutput(vector<Node> Pointers, int index)
 	  cout << Pointers[index].Perm[i] << " ";
 	}
       cout << endl;
+      //cout << index << endl;
       index = Pointers[index].parent;
+      //cout << index << endl;
     }
 }
