@@ -8,6 +8,7 @@ Project: Project 2 (BFS and IDS with permutation)
 #include <string>
 #include <algorithm>
 #include <queue>
+#include <time.h>
 
 using namespace std;
 
@@ -33,6 +34,7 @@ void printOutput (vector<Node> Pointers, int index);
 
 void successors(vector<Node>&Pointers, queue<Node>&Queue, vector<int>permutation, int parent, int size)
 {
+  
   for(int i = 2; i <= size; i++)
     {
       for(int j = 0; j + i <= size; j++)
@@ -75,8 +77,13 @@ int main()
     
     //bool a = checkGoal(permutation, size);
     //cout << "true or false: " << a << endl;
-    
+
+    clock_t t;
+    t = clock();
     BFS(permutation, size);
+    t = clock() - t;
+
+    cout << "BFS time in seconds:  " << (float(t))/CLOCKS_PER_SEC << endl;
     
     return 0;
 }
