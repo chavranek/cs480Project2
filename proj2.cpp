@@ -9,6 +9,7 @@ Project: Project 2 (BFS and IDS with permutation)
 #include <algorithm>
 #include <queue>
 #include <time.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -62,6 +63,33 @@ void successors(vector<Node>&Pointers, queue<Node>&Queue, vector<int>permutation
     }
 }
 
+//used for DFS
+void successors(vector<Node>&Pointers, stack<Node>&Stack, vector<int>permutation, int parent\, int size)
+{
+  for(int i = 2; i <= size; i++)
+    {
+      for(int j = 0; j + i <= size; j++)
+        {
+          vector<int> cycle;
+          vector<int> succ;
+          succ = permutation;
+          reverse(succ.begin()+j, succ.begin()+j+i);
+          cycle = Pointers[parent].Perm;
+          if (!equal(succ.begin(), succ.end(), cycle.begin()))
+            {
+              Node childNode;
+              childNode.Perm = succ;
+              childNode.parent = parent;
+              Pointers.push_back(childNode);
+
+              childNode.parent = Pointers.size() -1;
+              Stack.push(childNode);
+            }
+        }
+   }
+}
+
+
 int main()
 {
     vector<int> permutation = getInput();
@@ -72,7 +100,7 @@ int main()
     BFS(permutation, size);
     t = clock() - t;
 
-    cout << "BFS time in seconds:  " << (float(t))/CLOCKS_PER_SEC << endl;
+    cout << "BFS time in seconds:  " << fixed << setprecision(6) << (float(t))/CLOCKS_PER_SEC << endl;
     cout << "BFS total number of visited states: " << bfsVisited << endl;
     cout << "BFS max queue size: " << bfsMaxQueueSize << endl;
 
@@ -109,7 +137,6 @@ vector<int> getInput()
 	  {
 	    if (!number.empty())
 	      {
-		cout << "entered" << endl;
 		int num = stoi(number);
 		permutation.push_back(num);
 		number = "";
@@ -158,6 +185,41 @@ void BFS(vector<int> Permutation, int size)
     }
     return;
 }
+
+bool DFS(vector<int> Permutation, int size, int depth)
+{
+  vector<Node> Pointers;
+  stack<Node> Stack;
+
+    Node initial;
+    initial.parent = -1;
+    for (int i = 0; i < size; i++)
+        initial.Perm.push_back(Permutation[i]);
+
+    Pointers.push_back(initial);
+    initial.parent = Pointers.size()-1;
+    Stack.push(initial);
+
+    while(!Stack.empty())
+    {
+                cout << "Depth in function:" << depth << endl;
+        Node currentNode = Stack.top();
+        //cout << "current node parent: " << currentNode.parent << endl;
+        Stack.pop();
+        if (checkGoal(currentNode.Perm, size))
+        {
+            printOutput(Pointers, Pointers.size()-1);
+            return true;
+        }
+        if(depth > 0)
+        {
+        successors(Pointers, Stack, currentNode.Perm, currentNode.parent, size);
+        depth--;
+        }
+    }
+    return false;
+}
+
 
 bool checkGoal(vector<int> Permutation, int size)
 {
