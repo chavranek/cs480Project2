@@ -185,6 +185,7 @@ bool checkGoal(vector<int> Permutation, int size)
 
 void printOutput(vector<Node> Pointers, int index)
 {
+    cout << "Solution from goal to start: " << endl;
     
     while (index != -1)
     {
