@@ -15,10 +15,14 @@ using namespace std;
 
 int bfsVisited = 0;
 int bfsMaxQueueSize = 0;
+int idsVisited = 0;
+int idsMaxStackSize = 0;
+
 
 vector<int> getInput ();
 void BFS (vector<int> Permutation, int size);
 bool checkGoal (vector<int> Permutation, int size);
+void IDS(vector<int>Permutation, int size);
 
 struct Node
 {
@@ -104,6 +108,17 @@ int main()
     cout << "BFS total number of visited states: " << bfsVisited << endl;
     cout << "BFS max queue size: " << bfsMaxQueueSize << endl;
 
+    clock_t d;
+    d = clock();
+    IDS(permutation, size);
+    d = clock() - d;
+
+    cout << "IDS time in seconds:  " << fixed << setprecision(6) << (float(d))/CLOCKS_PER_SE\
+C << endl;
+    cout << "IDS total number of visited states: " << idsVisited << endl;
+    cout << "IDS max queue size: " << idsMaxStackSize << endl;
+
+
     
     
     return 0;
@@ -186,6 +201,20 @@ void BFS(vector<int> Permutation, int size)
     return;
 }
 
+void IDS(vector<int> Permutation, int size)
+{
+  int depth = 0;
+  bool dfs = false;
+  while(dfs = false)
+    {
+      dfs = DFS(Permutation, size, depth);
+      if (dfs =false)
+	{
+	  depth++;
+	}
+    }
+}
+  
 bool DFS(vector<int> Permutation, int size, int depth)
 {
   vector<Node> Pointers;
