@@ -10,6 +10,7 @@ Project: Project 2 (BFS and IDS with permutation)
 #include <queue>
 #include <time.h>
 #include <iomanip>
+#include <stack>
 
 using namespace std;
 
@@ -23,17 +24,21 @@ vector<int> getInput ();
 void BFS (vector<int> Permutation, int size);
 bool checkGoal (vector<int> Permutation, int size);
 void IDS(vector<int>Permutation, int size);
+bool DFS(vector<int> Permutation, int size, int depth);
 
 struct Node
 {
+  vector<int> Perm;
+  int parent;
+  int depth;
+  
+  
+  Node()
+  {
     vector<int> Perm;
-    int parent;
-
-    Node()
-    {
-        vector<int> Perm;
-        parent = -1;
-    }
+    parent = -1;
+    int depth = 0;
+  }
 };
 
 void printOutput (vector<Node> Pointers, int index);
@@ -68,7 +73,7 @@ void successors(vector<Node>&Pointers, queue<Node>&Queue, vector<int>permutation
 }
 
 //used for DFS
-void successors(vector<Node>&Pointers, stack<Node>&Stack, vector<int>permutation, int parent\, int size)
+void successors(vector<Node>&Pointers, stack<Node>&Stack, vector<int>permutation, int parent, int size, int depth)
 {
   for(int i = 2; i <= size; i++)
     {
@@ -84,10 +89,17 @@ void successors(vector<Node>&Pointers, stack<Node>&Stack, vector<int>permutation
               Node childNode;
               childNode.Perm = succ;
               childNode.parent = parent;
+	      childNode.depth = depth + 1;
               Pointers.push_back(childNode);
 
-              childNode.parent = Pointers.size() -1;
+              childNode.parent = Pointers.size() - 1;
+	      //childNode.depth = depth + 1;
               Stack.push(childNode);
+	      idsVisited++;
+              if (Stack.size() > idsMaxStackSize)
+		{
+		  idsMaxStackSize = Stack.size();
+		}
             }
         }
    }
@@ -205,10 +217,10 @@ void IDS(vector<int> Permutation, int size)
 {
   int depth = 0;
   bool dfs = false;
-  while(dfs = false)
+  while(dfs == false)
     {
       dfs = DFS(Permutation, size, depth);
-      if (dfs =false)
+      if (dfs == false)
 	{
 	  depth++;
 	}
@@ -227,26 +239,30 @@ bool DFS(vector<int> Permutation, int size, int depth)
 
     Pointers.push_back(initial);
     initial.parent = Pointers.size()-1;
+    initial.depth = 0;
     Stack.push(initial);
+    idsVisited++;
+    idsMaxStackSize = Stack.size();
 
     while(!Stack.empty())
     {
-                cout << "Depth in function:" << depth << endl;
         Node currentNode = Stack.top();
-        //cout << "current node parent: " << currentNode.parent << endl;
         Stack.pop();
         if (checkGoal(currentNode.Perm, size))
         {
-            printOutput(Pointers, Pointers.size()-1);
+            printOutput(Pointers, currentNode.parent);
             return true;
         }
-        if(depth > 0)
-        {
-        successors(Pointers, Stack, currentNode.Perm, currentNode.parent, size);
-        depth--;
-        }
+	if (currentNode.depth == depth)
+	  {
+	    cout << "depth: " << depth << endl;
+	    return false;
+	  }
+
+        successors(Pointers, Stack, currentNode.Perm, currentNode.parent, size, depth);
     }
     return false;
+
 }
 
 
