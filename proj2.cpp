@@ -12,6 +12,9 @@ Project: Project 2 (BFS and IDS with permutation)
 
 using namespace std;
 
+int bfsVisited = 0;
+int bfsMaxQueueSize = 0;
+
 vector<int> getInput ();
 void BFS (vector<int> Permutation, int size);
 bool checkGoal (vector<int> Permutation, int size);
@@ -53,6 +56,9 @@ void successors(vector<Node>&Pointers, queue<Node>&Queue, vector<int>permutation
 
 	      childNode.parent = Pointers.size() - 1;
 	      Queue.push(childNode);
+	      bfsVisited++;
+	      if (Queue.size() > bfsMaxQueueSize)
+	        bfsMaxQueueSize = Queue.size();
 	    }
 	  /*cout << "posisible perms" << endl;
 	  for(int m = 0; m < succ.size(); m++)
@@ -84,6 +90,8 @@ int main()
     t = clock() - t;
 
     cout << "BFS time in seconds:  " << (float(t))/CLOCKS_PER_SEC << endl;
+    cout << "BFS total number of visited states: " << bfsVisited << endl;
+    cout << "BFS max queue size: " << bfsMaxQueueSize << endl;
     
     return 0;
 }
@@ -146,6 +154,8 @@ void BFS(vector<int> Permutation, int size)
     Pointers.push_back(initial);
     initial.parent = Pointers.size()-1;
     Queue.push(initial);
+    bfsVisited++;
+    bfsMaxQueueSize = Queue.size();
     
     while(!Queue.empty())
     {
