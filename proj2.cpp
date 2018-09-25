@@ -31,8 +31,6 @@ struct Node
     }
 };
 
-vector<Node> Permutation;
-queue<Node> Queue;
 void printOutput (vector<Node> Pointers, int index);
 
 void successors(vector<Node>&Pointers, queue<Node>&Queue, vector<int>permutation, int parent, int size)
@@ -60,13 +58,7 @@ void successors(vector<Node>&Pointers, queue<Node>&Queue, vector<int>permutation
 	      if (Queue.size() > bfsMaxQueueSize)
 	        bfsMaxQueueSize = Queue.size();
 	    }
-	  /*cout << "posisible perms" << endl;
-	  for(int m = 0; m < succ.size(); m++)
-	    {
-	      cout << succ[m] << " ";
-	    }
-          cout << endl;*/
-        }
+	}
     }
 }
 
@@ -75,15 +67,6 @@ int main()
     vector<int> permutation = getInput();
     int size = permutation.size();
     
-    /*for(int i = 0; i < size; i++)
-    {
-      cout << permutation[i] << " ";
-    }
-    cout << endl;*/
-    
-    //bool a = checkGoal(permutation, size);
-    //cout << "true or false: " << a << endl;
-
     clock_t t;
     t = clock();
     BFS(permutation, size);
@@ -92,13 +75,15 @@ int main()
     cout << "BFS time in seconds:  " << (float(t))/CLOCKS_PER_SEC << endl;
     cout << "BFS total number of visited states: " << bfsVisited << endl;
     cout << "BFS max queue size: " << bfsMaxQueueSize << endl;
+
+    
     
     return 0;
 }
 
 vector<int> getInput()
 {
-    int num = 0;
+  int num = 0;
   string P;
   string number;
   vector<int> permutation;
@@ -113,31 +98,33 @@ vector<int> getInput()
   // pushes them onto a vector.
   for(int i = 0; i < P.length(); i++)
   {
-      if (isdigit(P[i]))
-    	{
-    	  string snum(1, P[i]);
-	  number += snum;
-	}
-      else if(P[i] == ' ')
-	{
-	  int num = stoi(number);
-          permutation.push_back(num);
-          number = "";
+    if (isdigit(P[i]))
+      {
+	string snum(1, P[i]);
+	number += snum;
+      }
+    else if(P[i] == ' ')
+      {
+	if (i != P.length()-1)
+	  {
+	    if (!number.empty())
+	      {
+		cout << "entered" << endl;
+		int num = stoi(number);
+		permutation.push_back(num);
+		number = "";
+	      }
+	  }
+      }
+    if(i == P.length()-1)
+      {
+        int num = stoi(number);
+        permutation.push_back(num);
+        number = "";
+      }
 
-	}
-      if(i == P.length()-1)
-	{
-	  int num = stoi(number);
-          permutation.push_back(num);
-	  number = "";
-	}
-    }
+  }
   
-/*
-  int size = permutation.size();
-  successors(permutation, size);
-    }
-  cout << endl;*/
   return permutation;
 }
 
@@ -160,8 +147,7 @@ void BFS(vector<int> Permutation, int size)
     while(!Queue.empty())
     {
         Node currentNode = Queue.front();
-        //cout << "current node parent: " << currentNode.parent << endl;
-        Queue.pop();
+	Queue.pop();
         if (checkGoal(currentNode.Perm, size))
         {
             printOutput(Pointers, currentNode.parent);
@@ -188,14 +174,11 @@ void printOutput(vector<Node> Pointers, int index)
     
     while (index != -1)
     {
-      //cout << "here" << endl;
       for (int i = 0; i < Pointers[index].Perm.size(); i++)
 	{
 	  cout << Pointers[index].Perm[i] << " ";
 	}
       cout << endl;
-      //cout << index << endl;
       index = Pointers[index].parent;
-      //cout << index << endl;
     }
 }
