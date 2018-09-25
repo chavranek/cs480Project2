@@ -152,7 +152,7 @@ void BFS(vector<int> Permutation, int size)
             return;
         }
         
-        successors(Pointers, Queue, currentNode.Perm, initial.parent, size);
+        successors(Pointers, Queue, currentNode.Perm, currentNode.parent, size);
     }
     return;
 }
@@ -164,9 +164,9 @@ bool checkGoal(vector<int> Permutation, int size)
         if (Permutation[i] > Permutation[i+1])
             return false;
     }
-    for (int i = 0; i < size; i++)
-        cout << Permutation[i] << ' ';
-    cout << endl;
+    /*for (int i = 0; i < size; i++)
+        cout << Permutation[i] << ' ';*/
+    //cout << endl;
     return true;
 }
 
