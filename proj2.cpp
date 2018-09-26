@@ -120,6 +120,8 @@ int main()
     cout << "BFS total number of visited states: " << bfsVisited << endl;
     cout << "BFS max queue size: " << bfsMaxQueueSize << endl;
 
+    cout << "\n" << endl;
+
     clock_t d;
     d = clock();
     IDS(permutation, size);
@@ -128,7 +130,7 @@ int main()
     cout << "IDS time in seconds:  " << fixed << setprecision(6) << (float(d))/CLOCKS_PER_SE\
 C << endl;
     cout << "IDS total number of visited states: " << idsVisited << endl;
-    cout << "IDS max queue size: " << idsMaxStackSize << endl;
+    cout << "IDS max stack size: " << idsMaxStackSize << endl;
 
 
     
@@ -204,6 +206,7 @@ void BFS(vector<int> Permutation, int size)
 	Queue.pop();
         if (checkGoal(currentNode.Perm, size))
         {
+	  cout << "Answer for BFS:" << endl;
             printOutput(Pointers, currentNode.parent);
             return;
         }
@@ -250,16 +253,20 @@ bool DFS(vector<int> Permutation, int size, int depth)
         Stack.pop();
         if (checkGoal(currentNode.Perm, size))
         {
-            printOutput(Pointers, currentNode.parent);
-            return true;
+	  cout << "Answer for IDS:" << endl;
+	  printOutput(Pointers, currentNode.parent);
+	  return true;
         }
-	if (currentNode.depth == depth)
+	if (currentNode.depth == depth && Stack.size() ==0)
 	  {
-	    cout << "depth: " << depth << endl;
+	    //cout << "depth: " << depth << endl;
 	    return false;
 	  }
 
-        successors(Pointers, Stack, currentNode.Perm, currentNode.parent, size, depth);
+	if(currentNode.depth < depth)
+	  {
+	    successors(Pointers, Stack, currentNode.Perm, currentNode.parent, size, currentNode.depth);
+	  }
     }
     return false;
 
