@@ -172,6 +172,7 @@ vector<int> getInput()
 	      }
 	  }
       }
+    //elseel
     if(i == P.length()-1)
       {
         int num = stoi(number);
@@ -285,15 +286,32 @@ bool checkGoal(vector<int> Permutation, int size)
 
 void printOutput(vector<Node> Pointers, int index)
 {
-    cout << "Solution from goal to start: " << endl;
-    
+  vector< vector < int> > moves;
+
+    int moveNum = 1;
     while (index != -1)
     {
-      for (int i = 0; i < Pointers[index].Perm.size(); i++)
-	{
-	  cout << Pointers[index].Perm[i] << " ";
-	}
-      cout << endl;
+      moves.push_back(Pointers[index].Perm);
       index = Pointers[index].parent;
     }
+    
+    reverse(moves.begin(), moves.end());
+    cout << "The number of moves = " << moves.size()-1 << endl;
+    for(int i = 1; i < moves.size(); i++)
+      {
+	cout << "Move " << moveNum << ": " << "[";
+	for(int j = 0; j < moves[i].size(); j++)
+	  {
+	    if(j < (moves[i].size()-1))
+	      {
+		cout << moves[i][j] << ",";
+	      }
+	    else
+	      {
+		cout << moves[i][j] << "]";
+	      }
+	  }
+	moveNum++;
+	cout << endl;
+      }
 }
