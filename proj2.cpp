@@ -160,7 +160,7 @@ vector<int> getInput()
 	string snum(1, P[i]);
 	number += snum;
       }
-    else if(P[i] == ' ')
+    else if(P[i] == ' ' || P[i] == ',')
       {
 	if (i != P.length()-1)
 	  {
@@ -171,18 +171,6 @@ vector<int> getInput()
 		number = "";
 	      }
 	  }
-      }
-    else if(P[i] == ',')
-      {
-        if (i != P.length()-1)
-          {
-            if (!number.empty())
-              {
-                int num = stoi(number);
-                permutation.push_back(num);
-                number = "";
-              }
-          }
       }
     if(i == P.length()-1)
       {
