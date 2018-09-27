@@ -1,7 +1,7 @@
 /*
 Authors: Christian Havranek, Christopher Tran, Cole Watson
 Project: Project 2 (BFS and IDS with permutation)
- */
+*/
 
 #include <iostream>
 #include <vector>
@@ -144,7 +144,10 @@ vector<int> getInput()
   string P;
   string number;
   vector<int> permutation;
-  cout << "Input a permutation: " << endl;
+  cout << "Input a permutation with a bracket at the beginning, commas " << endl;
+  cout << "between each number, and a closing bracket at the end of" << endl;
+  cout << "your permutation. Follow the format of the example below:" << endl;
+  cout << "[1,2,3,4,5,6,7,8,9]" << endl;
 
   // grabs the entire line of user input
   getline(cin, P);
