@@ -172,7 +172,18 @@ vector<int> getInput()
 	      }
 	  }
       }
-    //elseel
+    else if(P[i] == ',')
+      {
+        if (i != P.length()-1)
+          {
+            if (!number.empty())
+              {
+                int num = stoi(number);
+                permutation.push_back(num);
+                number = "";
+              }
+          }
+      }
     if(i == P.length()-1)
       {
         int num = stoi(number);
